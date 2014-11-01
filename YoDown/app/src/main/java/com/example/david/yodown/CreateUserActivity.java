@@ -3,19 +3,34 @@ package com.example.david.yodown;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.app.AlertDialog;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.util.Log;
+
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import org.apache.http.Header;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import static android.app.PendingIntent.getActivity;
 
 
 public class CreateUserActivity extends ActionBarActivity {
 
+    private User user;
     private Button formCreateBtn;
     private EditText createUsername;
     private TextView errorId;
+    private final String BASE_URL = "http://104.236.61.102:3000";
+    private AsyncHttpClient client = new AsyncHttpClient();
 
     public static final String USERNAME_EXTRA="create username";
 
@@ -53,9 +68,41 @@ public class CreateUserActivity extends ActionBarActivity {
 
     private void sendServer(View v){
         String username = createUsername.getText().toString();
+        String password = createPassword.getText().toString();
+/*        RequestParams parameters = new RequestParams();
+        parameters.add("user_id", username);
+        parameters.add("password", password);
+        String URL = BASE_URL+"/users";
+        Log.v("URL:", URL);
+        JsonHttpResponseHandler responseHandler = new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                createNewUser(response);
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject response) {
+                Log.v("RESPONSE:", response.toString());
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String response, Throwable throwable) {
+                Log.v("RESPONSE:", response);
+            }
+
+        };
+        client.post(URL, parameters, responseHandler);*/
         //TODO: send username and password to server
     }
 
+    private void createNewUser(JSONObject response){
+        try {
+            user = new User(response.getString("_id"), createUsername.getText().toString(), createPassword.getText().toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(user.getUniqueId() + ", " +  user.getPassword() + ", " + user.getUserName());
+        AlertDialog dialog = builder.create();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
