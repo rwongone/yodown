@@ -10,8 +10,12 @@ public class User {
     private String userName;
     private String uniqueId;
 
-    public User( String uniqueId, String userName, String password){
+    public User(String userName){
         this.userName = userName;
+    }
+
+    public User( String uniqueId, String userName, String password){
+        this(userName);
         this.uniqueId = uniqueId;
         this.password = password;
     }

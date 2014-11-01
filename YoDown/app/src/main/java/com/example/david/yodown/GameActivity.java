@@ -11,8 +11,17 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import org.apache.http.Header;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 
 public class GameActivity extends ActionBarActivity {
@@ -21,6 +30,8 @@ public class GameActivity extends ActionBarActivity {
 
     private String username = "";
     private ArrayList<String> enemies;
+    private final String BASE_URL = "http://104.236.61.102:3000";
+    private AsyncHttpClient client = new AsyncHttpClient();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +60,58 @@ public class GameActivity extends ActionBarActivity {
         });
     }
 
+    public void sendYo(String senderId, String recipientId){
+        RequestParams parameters = new RequestParams();
+        parameters.add("sender_id", senderId);
+        parameters.add("recipient_id", recipientId);
+        String URL = BASE_URL+"/yo";
+        Log.v("URL:", URL);
+        JsonHttpResponseHandler responseHandler = new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                Log.v("response:", response.toString());
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject response) {
+
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String response, Throwable throwable) {
+
+            }
+        };
+        client.post(URL, parameters, responseHandler);
+    }
+
+    private void fetchNearbyUsers(User user){
+        RequestParams parameters = new RequestParams();
+        parameters.add("user_id", user.getUserName());
+        Map<String, String> location = new HashMap<String, String>();
+        location.put("latitude", user.getLatitude()+"");
+        location.put("longitude", user.getLongitude()+"");
+        parameters.put("location", location);
+        String URL = BASE_URL+"/location";
+        Log.v("URL:", URL);
+        Log.v("parameters:", parameters.toString());
+        JsonHttpResponseHandler responseHandler = new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                Log.v("response:", response.toString());
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject response) {
+
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String response, Throwable throwable) {
+
+            }
+        };
+        client.post(URL, parameters, responseHandler);
+    }
+
+    //shoot "/yo, params: sender_id, recipient_id"
+    //fetch "/location, params: user_id, location{latitude, longitude}"
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
