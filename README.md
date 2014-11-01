@@ -1,5 +1,5 @@
-npm install
+SETUP
+-----
+Install node, npm.
+Install mongodb.
 
-npm start
-
-see localhost:3000

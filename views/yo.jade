@@ -1,0 +1,7 @@
+extends layout
+
+block content
+	h1 Enter user object id
+	form(name="userdata", action="/yo", method="post")
+		input(type="text", name="_id")
+		input(type="submit", value="submit")
