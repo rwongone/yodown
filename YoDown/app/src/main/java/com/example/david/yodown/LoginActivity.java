@@ -4,11 +4,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import org.apache.http.Header;
+import org.json.JSONObject;
 
 
 public class LoginActivity extends ActionBarActivity {
@@ -16,6 +24,8 @@ public class LoginActivity extends ActionBarActivity {
     private Button loginBtn;
     private EditText loginUsername;
     private EditText loginPassword;
+    private final String BASE_URL = "http://104.236.61.102:3000";
+    private AsyncHttpClient client = new AsyncHttpClient();
 
     public static final String USERNAME_EXTRA = "Username Extra";
 
@@ -31,23 +41,40 @@ public class LoginActivity extends ActionBarActivity {
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(checkValidInput()) {
-                    toGamePage(v);
-                }
+                checkValidInput();
             }
         });
     }
 
-    private boolean checkValidInput(){
+    private void checkValidInput(){
         String username = loginUsername.getText().toString();
         String password = loginPassword.getText().toString();
-        //TODO: query server database, check if user is valid
-        return true;
+        RequestParams parameters = new RequestParams();
+        parameters.add("user_id", username);
+        parameters.add("password", password);
+        String URL = BASE_URL+"/users/login";
+        Log.v("URL:", URL);
+        JsonHttpResponseHandler responseHandler = new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                Log.v("response:", response.toString());
+                toGamePage();
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject response) {
+
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String response, Throwable throwable) {
+
+            }
+        };
+        client.post(URL, parameters, responseHandler);
     }
 
-    private void toGamePage(View v){
+    private void toGamePage(){
         String username = loginUsername.getText().toString();
-        Intent intent = new Intent(v.getContext(), GameActivity.class);
+        Intent intent = new Intent(getApplicationContext(), GameActivity.class);
         intent.putExtra(USERNAME_EXTRA, username);
         startActivity(intent);
     }
