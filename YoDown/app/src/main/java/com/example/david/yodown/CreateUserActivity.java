@@ -15,8 +15,6 @@ public class CreateUserActivity extends ActionBarActivity {
 
     private Button formCreateBtn;
     private EditText createUsername;
-    private EditText createPassword;
-    private EditText createRePassword;
     private TextView errorId;
 
     public static final String USERNAME_EXTRA="create username";
@@ -28,8 +26,6 @@ public class CreateUserActivity extends ActionBarActivity {
 
         formCreateBtn = (Button)findViewById(R.id.formCreateBtn);
         createUsername = (EditText)findViewById(R.id.createUsername);
-        createPassword = (EditText)findViewById(R.id.createPassword);
-        createRePassword = (EditText)findViewById(R.id.createRePassword);
         errorId = (TextView)findViewById(R.id.errorId);
 
         formCreateBtn.setOnClickListener(new View.OnClickListener() {
@@ -46,29 +42,18 @@ public class CreateUserActivity extends ActionBarActivity {
         String username = createUsername.getText().toString();
         if(username.equals("")){
             errorId.setText(getResources().getString(R.string.usernameCreateError));
+            errorId.setTextColor(getResources().getColor(R.color.errorRed));
             return false;
         }
-        String password = createPassword.getText().toString();
-        if(password.equals("")){
-            errorId.setText(getResources().getString(R.string.passwordCreateError1));
-            return false;
-        }
-        String rePassword = createRePassword.getText().toString();
-        if(!(password.equals(rePassword))){
-            errorId.setText(getResources().getString(R.string.passwordCreateError2));
-            return false;
-        }
+        errorId.setText(getResources().getString(R.string.createNotify));
+        errorId.setTextColor(getResources().getColor(R.color.goodGreen));
         //TODO: check if username is already being used
         return true;
     }
 
     private void sendServer(View v){
         String username = createUsername.getText().toString();
-        String password = createPassword.getText().toString();
         //TODO: send username and password to server
-        Intent intent = new Intent(v.getContext(), GameActivity.class);
-        intent.putExtra(USERNAME_EXTRA, username);
-        startActivity(intent);
     }
 
 
