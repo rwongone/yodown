@@ -20,5 +20,8 @@
     <string name="usernameCreateError">Please enter a valid username.</string>
     <string name="passwordCreateError1">Please enter a valid password.</string>
     <string name="passwordCreateError2">Passwords do not match.</string>
+    <string name="createNotify">A Yo will be sent to you.</string>
+    <string name="title_activity_game">GameActivity</string>
+    <string name="game_instruction">Yo!</string>
 
 </resources>
