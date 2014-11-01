@@ -2,10 +2,7 @@ var express = require('express');
 var router = express.Router();
 var User = require('../public/models/user').User;
 
-var yo = (function() {
-  var Yo = require('yo-api');
-  return new Yo(process.env.YO_API_TOKEN);
-})();
+var yo = require('../utils').yo;
 
 /* GET home page. */
 router.get('/', function(req, res) {
@@ -13,24 +10,22 @@ router.get('/', function(req, res) {
 });
 
 // use unique object id for identification
+// we get sender_id and recipient_id
 router.post('/', function(req, res) {
-	var sender_id = req.body._id;
-	User.findOne({_id: sender_id }, function(err, user) {
-		if (!err && user) {
-			var user_id = user.user_id;
-			console.log(user);
-			User.findOne({ user_id: user_id }, function(err, user) {
+	var sender_id = req.body.sender_id;
+	User.findOne({user_id: sender_id }, function(err, sender) {
+		if (!err && sender) {
+			User.findOne({ user_id: req.body.recipient_id }, function(err, recipient) {
 				if (!err) {
-					if (!user) {
-						res.send("USER DOES NOT EXIST");
+					if (!recipient) {
+						res.send("RECIPIENT USER DOES NOT EXIST");
 					} else {
-						// yo the user, at this point the user must exist
-						console.log("hello");
-						yo.yo(user_id, function(err, yo_res) {
+						// yo the recipient, at this point the recipient must exist
+						yo.yo(recipient.user_id, function(err, yo_res) {
 							if (!err) {
-								res.send(user_id + " has been YO'd.");
+								res.send(recipient.user_id + " has been YO'd.");
 							} else {
-								res.send("ERROR IN YO'ING USER");
+								res.send("ERROR IN YO'ING RECIPIENT");
 							}
 						});
 					}
@@ -40,9 +35,6 @@ router.post('/', function(req, res) {
 			});
 		} else {
 			res.send("AUTHENTICATION ERROR");
-			if (user) {
-				res.send("HUH");
-			}
 		}
 	});
 
