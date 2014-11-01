@@ -3,5 +3,7 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="header_text_size">36dp</dimen>
+    <dimen name="subHeader_text_size">24dp</dimen>
     <dimen name="paragraph_text_size">18dp</dimen>
+    <dimen name="form_vertical_margin">10dp</dimen>
 </resources>
