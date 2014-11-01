@@ -6,8 +6,8 @@
     <string name="action_settings">Settings</string>
     <string name="YoDownHead">YoDown</string>
     <string name="YoDownDescription">Yo or be Yo\'ed!</string>
-    <string name="existYoBtnDesc">Use existing Yo account</string>
-    <string name="createYoBtnDesc">Create new Yo account</string>
+    <string name="existYoBtnDesc">Log in</string>
+    <string name="createYoBtnDesc">Sign up with Yo Account</string>
     <string name="title_activity_create_user">Create new user</string>
     <string name="usernameHint">Yo Username</string>
     <string name="passwordHint">Yo Password</string>
@@ -20,6 +20,7 @@
     <string name="usernameCreateError">Please enter a valid username.</string>
     <string name="passwordCreateError1">Please enter a valid password.</string>
     <string name="passwordCreateError2">Passwords do not match.</string>
+    <string name="createFail">Account creation failed.</string>
     <string name="createNotify">A Yo will be sent to you.</string>
     <string name="title_activity_game">GameActivity</string>
     <string name="game_instruction">Yo!</string>

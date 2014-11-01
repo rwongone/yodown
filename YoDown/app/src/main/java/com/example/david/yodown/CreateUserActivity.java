@@ -60,48 +60,33 @@ public class CreateUserActivity extends ActionBarActivity {
             errorId.setTextColor(getResources().getColor(R.color.errorRed));
             return false;
         }
-        errorId.setText(getResources().getString(R.string.createNotify));
-        errorId.setTextColor(getResources().getColor(R.color.goodGreen));
-        //TODO: check if username is already being used
         return true;
     }
 
     private void sendServer(View v){
         String username = createUsername.getText().toString();
-        String password = createPassword.getText().toString();
-/*        RequestParams parameters = new RequestParams();
+        RequestParams parameters = new RequestParams();
         parameters.add("user_id", username);
-        parameters.add("password", password);
         String URL = BASE_URL+"/users";
         Log.v("URL:", URL);
         JsonHttpResponseHandler responseHandler = new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                createNewUser(response);
+                errorId.setText(getResources().getString(R.string.createNotify));
+                errorId.setTextColor(getResources().getColor(R.color.goodGreen));
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject response) {
-                Log.v("RESPONSE:", response.toString());
+                errorId.setText(getResources().getString(R.string.createFail));
+                errorId.setTextColor(getResources().getColor(R.color.errorRed));
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, String response, Throwable throwable) {
-                Log.v("RESPONSE:", response);
+                errorId.setText(getResources().getString(R.string.createFail));
+                errorId.setTextColor(getResources().getColor(R.color.errorRed));
             }
-
         };
-        client.post(URL, parameters, responseHandler);*/
-        //TODO: send username and password to server
-    }
-
-    private void createNewUser(JSONObject response){
-        try {
-            user = new User(response.getString("_id"), createUsername.getText().toString(), createPassword.getText().toString());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(user.getUniqueId() + ", " +  user.getPassword() + ", " + user.getUserName());
-        AlertDialog dialog = builder.create();
+        client.post(URL, parameters, responseHandler);
     }
 
     @Override
