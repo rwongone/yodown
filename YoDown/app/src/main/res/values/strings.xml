@@ -13,5 +13,6 @@
     <string name="passwordHint">Password</string>
     <string name="repasswordHint">Re-password</string>
     <string name="formCreateBtn">Create user</string>
+    <string name="formCreateTitle">Create New Yo User</string>
 
 </resources>
