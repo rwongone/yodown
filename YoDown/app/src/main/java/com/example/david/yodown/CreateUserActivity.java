@@ -19,6 +19,8 @@ public class CreateUserActivity extends ActionBarActivity {
     private EditText createRePassword;
     private TextView errorId;
 
+    public static final String USERNAME_EXTRA="create username";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +36,7 @@ public class CreateUserActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 if(checkValidInput()){
-                    sendServer();
+                    sendServer(v);
                 }
             }
         });
@@ -60,11 +62,13 @@ public class CreateUserActivity extends ActionBarActivity {
         return true;
     }
 
-    private void sendServer(){
+    private void sendServer(View v){
         String username = createUsername.getText().toString();
         String password = createPassword.getText().toString();
         //TODO: send username and password to server
-        //TODO: go to game page
+        Intent intent = new Intent(v.getContext(), GameActivity.class);
+        intent.putExtra(USERNAME_EXTRA, username);
+        startActivity(intent);
     }
 
 
