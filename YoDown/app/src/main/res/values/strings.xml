@@ -4,5 +4,10 @@
     <string name="app_name">YoDown</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="YoDownHead">YoDown</string>
+    <string name="YoDownDescription">Yo or be Yo\'ed!</string>
+    <string name="existYoBtnDesc">Use existing Yo account</string>
+    <string name="createYoBtnDesc">Create new Yo account</string>
+    <string name="title_activity_create_user">CreateUserActivity</string>
 
 </resources>
