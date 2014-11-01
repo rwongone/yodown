@@ -1,5 +1,7 @@
 package com.example.david.yodown;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -15,6 +17,8 @@ public class LoginActivity extends ActionBarActivity {
     private EditText loginUsername;
     private EditText loginPassword;
 
+    public static final String USERNAME_EXTRA = "Username Extra";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,7 +32,7 @@ public class LoginActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 if(checkValidInput()) {
-                    toGamePage();
+                    toGamePage(v);
                 }
             }
         });
@@ -41,9 +45,11 @@ public class LoginActivity extends ActionBarActivity {
         return true;
     }
 
-    private void toGamePage(){
+    private void toGamePage(View v){
         String username = loginUsername.getText().toString();
-        //TODO: go to game page
+        Intent intent = new Intent(v.getContext(), GameActivity.class);
+        intent.putExtra(USERNAME_EXTRA, username);
+        startActivity(intent);
     }
 
     @Override

@@ -53,4 +53,10 @@ public class User {
     public String getUserName(){
         return this.userName;
     }
+
+    @Override
+    public String toString(){
+        return getUserName();
+    }
+
 }

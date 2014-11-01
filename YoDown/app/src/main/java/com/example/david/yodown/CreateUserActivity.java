@@ -34,6 +34,8 @@ public class CreateUserActivity extends ActionBarActivity {
     private final String BASE_URL = "http://104.236.61.102:3000";
     private AsyncHttpClient client = new AsyncHttpClient();
 
+    public static final String USERNAME_EXTRA="create username";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +51,7 @@ public class CreateUserActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 if(checkValidInput()){
-                    sendServer();
+                    sendServer(v);
                 }
             }
         });
@@ -75,10 +77,10 @@ public class CreateUserActivity extends ActionBarActivity {
         return true;
     }
 
-    private void sendServer(){
+    private void sendServer(View v){
         String username = createUsername.getText().toString();
         String password = createPassword.getText().toString();
-        RequestParams parameters = new RequestParams();
+/*        RequestParams parameters = new RequestParams();
         parameters.add("user_id", username);
         parameters.add("password", password);
         String URL = BASE_URL+"/users";
@@ -98,7 +100,11 @@ public class CreateUserActivity extends ActionBarActivity {
             }
 
         };
-        client.post(URL, parameters, responseHandler);
+        client.post(URL, parameters, responseHandler);*/
+        //TODO: send username and password to server
+        Intent intent = new Intent(v.getContext(), GameActivity.class);
+        intent.putExtra(USERNAME_EXTRA, username);
+        startActivity(intent);
     }
 
     private void createNewUser(JSONObject response){
