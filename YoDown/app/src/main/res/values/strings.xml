@@ -9,9 +9,16 @@
     <string name="existYoBtnDesc">Use existing Yo account</string>
     <string name="createYoBtnDesc">Create new Yo account</string>
     <string name="title_activity_create_user">Create new user</string>
-    <string name="usernameHint">Username</string>
-    <string name="passwordHint">Password</string>
-    <string name="repasswordHint">Re-password</string>
+    <string name="usernameHint">Yo Username</string>
+    <string name="passwordHint">Yo Password</string>
+    <string name="repasswordHint">Yo Re-password</string>
     <string name="formCreateBtn">Create user</string>
+    <string name="formCreateTitle">Yo Create New User</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="loginTitle">Yo Log in</string>
+    <string name="loginBtn">Log in</string>
+    <string name="usernameCreateError">Please enter a valid username.</string>
+    <string name="passwordCreateError1">Please enter a valid password.</string>
+    <string name="passwordCreateError2">Passwords do not match.</string>
 
 </resources>

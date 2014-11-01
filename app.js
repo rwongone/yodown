@@ -58,6 +58,4 @@ app.use(function(err, req, res, next) {
 });
 
 mongoose.connect('mongodb://localhost/db');
-
-
 module.exports = app;

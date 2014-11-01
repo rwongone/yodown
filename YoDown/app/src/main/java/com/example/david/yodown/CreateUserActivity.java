@@ -1,17 +1,70 @@
 package com.example.david.yodown;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 
 public class CreateUserActivity extends ActionBarActivity {
+
+    private Button formCreateBtn;
+    private EditText createUsername;
+    private EditText createPassword;
+    private EditText createRePassword;
+    private TextView errorId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_user);
+
+        formCreateBtn = (Button)findViewById(R.id.formCreateBtn);
+        createUsername = (EditText)findViewById(R.id.createUsername);
+        createPassword = (EditText)findViewById(R.id.createPassword);
+        createRePassword = (EditText)findViewById(R.id.createRePassword);
+        errorId = (TextView)findViewById(R.id.errorId);
+
+        formCreateBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(checkValidInput()){
+                    sendServer();
+                }
+            }
+        });
+    }
+
+    private boolean checkValidInput(){
+        String username = createUsername.getText().toString();
+        if(username.equals("")){
+            errorId.setText(getResources().getString(R.string.usernameCreateError));
+            return false;
+        }
+        String password = createPassword.getText().toString();
+        if(password.equals("")){
+            errorId.setText(getResources().getString(R.string.passwordCreateError1));
+            return false;
+        }
+        String rePassword = createRePassword.getText().toString();
+        if(!(password.equals(rePassword))){
+            errorId.setText(getResources().getString(R.string.passwordCreateError2));
+            return false;
+        }
+        //TODO: check if username is already being used
+        return true;
+    }
+
+    private void sendServer(){
+        String username = createUsername.getText().toString();
+        String password = createPassword.getText().toString();
+        //TODO: send username and password to server
+        //TODO: go to game page
     }
 
 

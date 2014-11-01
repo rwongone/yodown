@@ -1,49 +1,55 @@
 package com.example.david.yodown;
 
-import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 
-public class MainActivity extends ActionBarActivity {
+public class LoginActivity extends ActionBarActivity {
 
-    private Button existYoBtn;
-    private Button createYoBtn;
+    private Button loginBtn;
+    private EditText loginUsername;
+    private EditText loginPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
 
-        existYoBtn = (Button)findViewById(R.id.existYo);
-        createYoBtn = (Button)findViewById(R.id.createYo);
+        loginUsername = (EditText)findViewById(R.id.loginUsername);
+        loginPassword = (EditText)findViewById(R.id.loginPassword);
+        loginBtn = (Button)findViewById(R.id.loginBtn);
 
-        existYoBtn.setOnClickListener(new View.OnClickListener() {
+        loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getBaseContext(), LoginActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        createYoBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getBaseContext(), CreateUserActivity.class);
-                startActivity(intent);
+                if(checkValidInput()) {
+                    toGamePage();
+                }
             }
         });
     }
 
+    private boolean checkValidInput(){
+        String username = loginUsername.getText().toString();
+        String password = loginPassword.getText().toString();
+        //TODO: query server database, check if user is valid
+        return true;
+    }
+
+    private void toGamePage(){
+        String username = loginUsername.getText().toString();
+        //TODO: go to game page
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_login, menu);
         return true;
     }
 
