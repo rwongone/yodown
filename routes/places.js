@@ -52,7 +52,6 @@ router.post('/', function(req, res) {
 					},
 					{
 							user_id : 1
-					}
 					});
 					res.setHeader('Content-Type', 'application/json');
 					res.write(JSON.stringify(users));
