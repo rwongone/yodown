@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -30,6 +31,7 @@ public class LoginActivity extends ActionBarActivity {
     private EditText loginUsername;
     private EditText loginPassword;
     private CheckBox logCheckBox;
+    private TextView errorId;
     private final String BASE_URL = "http://104.236.61.102:3000";
     private AsyncHttpClient client = new AsyncHttpClient();
 
@@ -48,12 +50,13 @@ public class LoginActivity extends ActionBarActivity {
         loginPassword = (EditText)findViewById(R.id.loginPassword);
         loginBtn = (Button)findViewById(R.id.loginBtn);
         logCheckBox = (CheckBox)findViewById(R.id.logCheckBox);
+        errorId = (TextView)findViewById(R.id.errorId);
 
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //checkValidInput();
-                toGamePage();
+                checkValidInput();
+                //toGamePage();
             }
         });
     }
@@ -74,11 +77,11 @@ public class LoginActivity extends ActionBarActivity {
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject response) {
-
+                errorId.setText(getResources().getString(R.string.loginError));
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, String response, Throwable throwable) {
-
+                errorId.setText(getResources().getString(R.string.loginError));
             }
         };
         client.post(URL, parameters, responseHandler);

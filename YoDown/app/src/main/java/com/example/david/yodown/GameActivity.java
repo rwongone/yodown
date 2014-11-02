@@ -95,11 +95,29 @@ public class GameActivity extends ActionBarActivity implements GooglePlayService
 
     @Override
     public void onLocationChanged(Location location){
-        String msg = "Updated Location: " +
+        String msg = "Updated Location: " + username +
                 Double.toString(location.getLatitude()) + "," +
                 Double.toString(location.getLongitude());
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
         //TODO: send username + location to server
+        RequestParams parameters = new RequestParams();
+        parameters.add("user_id", username);
+        parameters.add("latitude", Double.toString(location.getLatitude()));
+        parameters.add("longitude", Double.toString(location.getLongitude()));
+        String URL = BASE_URL+"/places";
+        Log.v("URL:", URL);
+        JsonHttpResponseHandler responseHandler = new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject response) {
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String response, Throwable throwable) {
+            }
+        };
+        client.post(URL, parameters, responseHandler);
     }
 
     public void showErrorDialog(int errorCode){
