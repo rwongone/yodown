@@ -43,10 +43,10 @@ router.post('/', function(req, res) {
 					});
 
 					var range = 1000;
-					var a = latlong.latitude-range;
-					var b = latlong.latitude+range;
-					var c = latlong.longitude-range;
-					var d = latlong.longitude+range;
+					var a = Number(latlong.latitude)-Number(range);
+					var b = Number(latlong.latitude)+Number(range);
+					var c = Number(latlong.longitude)-Number(range);
+					var d = Number(latlong.longitude)+Number(range);
 					console.log(a+""+b+""+c+""+d+"");
 					console.log("^range");
 					/*********************Start Fetching Nearby Users**********************/
