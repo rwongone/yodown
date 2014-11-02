@@ -20,8 +20,9 @@ router.post('/', function(req, res) {
 		yo.yo_link(user_id, create_password + user_id, function(err, yo_res) {
 			if (!err) {
 				// user exists
-				res.setHeader('Content-Type', 'application/json');
-				res.write(JSON.stringify({response: "0"}));
+				yo_res.statusCode = 200;
+				res.statusCode = 200;
+				res.send(user_id + " has been YO'd.");
 			} else {
 				// user does not exist
 				res.send("USER NEEDS TO CREATE A YO ACCOUNT WITH THIS NAME");
@@ -47,11 +48,11 @@ router.post('/create_password', function(req, res) {
 		user.salt = salt;
 		user.save( function(err) {
 			if (!err) {
+				res.statusCode = 200;
 				res.send("SAVE SUCCESSFUL");
 			} else {
 				res.send(err);
 			}
-			res.end();
 		});
 	});
 });
@@ -67,22 +68,22 @@ router.post('/login', function(req, res) {
 	User.findOne({user_id: user_id }, function(err, user) {
 		if (!err) {
 			if (!user) {
-				res.write('User not found.');
+				res.send('User not found.');
 			} else {
 				res.setHeader('Content-Type', 'application/json');
+				res.statusCode = 200;
 				var salt = user.salt;
 				if (bcrypt.hashSync(password, salt) === user.password) {
-					res.write(JSON.stringify(user));
+					res.send(JSON.stringify(user));
 
 					console.log(JSON.stringify(user));
 				} else {
-					res.write('Incorrect password.');
+					res.send('Incorrect password.');
 				}
 			}
 		} else {
-			res.write("ERROR or something");
+			res.send("ERROR or something");
 		}
-		res.end();
 	});
 });
 
