@@ -45,12 +45,12 @@ router.post('/', function(req, res) {
 						} else {
 							console.log("error updating place " + place.user_id + "." + err);
 						}
-						res.write("YO, Places updated.");
+						console.log("YO, Places updated.");
 					});
 
 					/*********************Start Fetching Nearby Users**********************/
-					User.find({latitude: {$gt: latlong.latitude - 1}, 
-						latitude: {$lt: latlong.latitude + 1}, 
+					User.find({latitude: {$gt: latlong.latitude - 1},
+						latitude: {$lt: latlong.latitude + 1},
 						longitude: {$gt: latlong.longitude - 1},
 						longitude: {$lt: latlong.longitude + 1},
 						user_id: {$ne: user_id},
