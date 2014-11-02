@@ -13,7 +13,6 @@ router.get('/', function(req, res) {
 
 // sign up
 router.post('/', function(req, res) {
-	console.log(req);
 	var user_id = req.body.user_id;
 	// may have to make user_id uppercase, maybe not
 
