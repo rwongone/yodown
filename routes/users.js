@@ -20,8 +20,7 @@ router.post('/', function(req, res) {
 		yo.yo_link(user_id, create_password + user_id, function(err, yo_res) {
 			if (!err) {
 				// user exists
-				res.setHeader('Content-Type', 'application/json');
-				res.send(200);
+				res.writeHead(200, {"Content-Type", "application/json"});
 			} else {
 				// user does not exist
 				res.send(err);
