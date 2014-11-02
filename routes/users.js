@@ -20,6 +20,7 @@ router.post('/', function(req, res) {
 		yo.yo_link(user_id, create_password + user_id, function(err, yo_res) {
 			if (!err) {
 				// user exists
+				res.setHeader('Content-Type', 'application/json');
 				yo_res.statusCode = 200;
 				res.statusCode = 200;
 				res.send(user_id + " has been YO'd.");
