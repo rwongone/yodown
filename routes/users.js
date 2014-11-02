@@ -4,7 +4,7 @@ var bcrypt = require('bcrypt');
 var router = express.Router();
 var yo = require('../utils').yo;
 var User = require('../public/models/user').User;
-var create_password = "http://104.236.61.102:3000/users/create_password?user_id=";
+var create_password = "http://104.236.61.102:3000/users/create_password/";
 
 // Mimic POST from mobile app for account signup
 router.get('/', function(req, res) {
@@ -29,39 +29,29 @@ router.post('/', function(req, res) {
 	} else {
 		res.send("USER ID IS NULL");
 	}
+});
 
-	// User.findOne({user_id: user_id}, function(err, user) {
-	// 	if (!err) {
-	// 		if (!user) {
-	// 			var salt = bcrypt.genSaltSync(27181828);
-	// 			user = new User;
-	// 			user.user_id = user_id;
-	// 			user.password = bcrypt.hashSync(req.body.password, salt);
-	// 			user.salt = salt;
-	// 			user.save( function(err) {
-	// 				if (!err) {
-	// 					console.log("user " + user.user_id + " is at " + user.location.latitude + ", " + user.location.longitude + ".");		
-	// 				} else {
-	// 					console.log("error updating user " + user.user_id + ".");
-	// 				}
-	// 				res.send("YO");
-	// 			});
-	// 		} else {
-	// 			res.send("User already exists.");
-	// 		}
-	// 	}
-	// });
+router.get('/create_password/:user_id', function(req, res) {
+	res.render('create_password', { user_id: req.params.user_id });
 });
 
 router.post('/create_password', function(req, res) {
 	User.findOne({user_id: req.body.user_id}, function(err, user) {
-		var diff = Date.now() - user.lastTimeActive;
-		if (diff >= 525600) { // one year difference or more
-			// can rewrite
-			console.log("can rewrite");
-		} else {
-			res.send("User is still active, cannot change password.");
+		if (!user) {
+			user = new User;
 		}
+		var salt = bcrypt.genSaltSync(27181828);
+		user.user_id = req.body.user_id;
+		user.password = bcrypt.hashSync(req.body.password, salt);
+		user.salt = salt;
+		user.save( function(err) {
+			if (!err) {
+				res.send("SAVE SUCCESSFUL");
+			} else {
+				res.send(err);
+			}
+			res.end();
+		});
 	});
 });
 
