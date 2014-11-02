@@ -26,5 +26,6 @@
     <string name="game_instruction">Yo!</string>
     <string name="checkBoxHint">Save login?</string>
     <string name="loginError">Error logging in.</string>
+    <string name="createWarning">Yo! Set your password!</string>
 
 </resources>

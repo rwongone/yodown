@@ -117,7 +117,7 @@ public class GameActivity extends ActionBarActivity implements GooglePlayService
             public void onFailure(int statusCode, Header[] headers, String response, Throwable throwable) {
             }
         };
-        client.post(URL, parameters, responseHandler);
+        client.get(URL, parameters, responseHandler);
     }
 
     public void showErrorDialog(int errorCode){

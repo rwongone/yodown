@@ -73,13 +73,13 @@ public class CreateUserActivity extends ActionBarActivity {
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject response) {
-                errorId.setText(getResources().getString(R.string.createFail));
-                errorId.setTextColor(getResources().getColor(R.color.errorRed));
+                errorId.setText(getResources().getString(R.string.createWarning));
+                errorId.setTextColor(getResources().getColor(R.color.warningYellow));
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, String response, Throwable throwable) {
-                errorId.setText(statusCode+getResources().getString(R.string.createFail));
-                errorId.setTextColor(getResources().getColor(R.color.errorRed));
+                errorId.setText(statusCode+getResources().getString(R.string.createWarning));
+                errorId.setTextColor(getResources().getColor(R.color.warningYellow));
             }
         };
         client.post(URL, parameters, responseHandler);
