@@ -23,6 +23,16 @@ router.post('/', function(req, res) {
 						// yo the recipient, at this point the recipient must exist
 						yo.yo(recipient.user_id, function(err, yo_res) {
 							if (!err) {
+								/*** Update Score***/
+								sender.score = sender.score + 100;
+								sender.save( function(err) {
+									if (!err) {
+										res.statusCode = 200;
+										console.log(sender.user_id + " just YO'd " + recipient.user_id + ". Dead flag upadted.");
+									} else {
+										res.send(err);
+									}
+								});
 								/*** Update Flag***/
 								recipient.dead = true;
 								recipient.save( function(err) {
