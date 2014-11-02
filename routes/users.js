@@ -97,7 +97,7 @@ setInterval(function(){
 	User.update(
 		{'dead':  true},
 		{
-			$set:{'dead' : false}
+			'dead': false
 		});
 }, 60000);
 
