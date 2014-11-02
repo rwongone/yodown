@@ -42,7 +42,7 @@ router.post('/', function(req, res) {
 						}
 					});
 
-					var range = 1000;
+					var range = 5;
 					console.log(latlong.latitude-range);
 					console.log("^range");
 					/*********************Start Fetching Nearby Users**********************/
