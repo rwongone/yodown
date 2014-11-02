@@ -42,13 +42,15 @@ router.post('/', function(req, res) {
 						}
 					});
 
-					var range = 5;
+					var range = 1;
 					console.log(latlong.latitude-range);
 					console.log("^range");
 					/*********************Start Fetching Nearby Users**********************/
 					User.find({
-						'location.latitude': { $gte: latlong.latitude-range, $lte: latlong.latitude+range },
-						'location.longitude': { $gte: latlong.longitude-range, $lte: latlong.longitude+range },
+						'location.latitude': { $gte: latlong.latitude-range},
+						'location.latitude': { $lte: latlong.latitude+range},
+						'location.longitude': { $gte: latlong.longitude-range},
+						'location.longitude': { $lte: latlong.longitude+range},
 						user_id: {$ne: user_id},
 						'dead':  false
 						}, function (err, users) {
