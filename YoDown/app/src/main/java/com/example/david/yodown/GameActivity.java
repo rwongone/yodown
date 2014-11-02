@@ -167,6 +167,7 @@ public class GameActivity extends ActionBarActivity implements GooglePlayService
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //TODO: send server request
+                sendYo(username, enemies.get(position));
                 Log.v("Item", enemies.get(position));
             }
         });
