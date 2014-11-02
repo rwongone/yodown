@@ -13,6 +13,7 @@ router.get('/', function(req, res) {
 
 // sign up
 router.post('/', function(req, res) {
+	console.log(req);
 	var user_id = req.body.user_id;
 	// may have to make user_id uppercase, maybe not
 
@@ -21,6 +22,7 @@ router.post('/', function(req, res) {
 			if (!err) {
 				// user exists
 				res.setHeader('Content-Type', 'application/json');
+				res.status(200);
 				res.write(JSON.stringify({response: "0"}));
 			} else {
 				// user does not exist
@@ -37,6 +39,7 @@ router.get('/create_password/:user_id', function(req, res) {
 });
 
 router.post('/create_password', function(req, res) {
+	console.log(req);
 	User.findOne({user_id: req.body.user_id}, function(err, user) {
 		if (!user) {
 			user = new User;
@@ -47,6 +50,7 @@ router.post('/create_password', function(req, res) {
 		user.salt = salt;
 		user.save( function(err) {
 			if (!err) {
+				res.status(200);
 				res.send("SAVE SUCCESSFUL");
 			} else {
 				res.send(err);
@@ -62,6 +66,7 @@ router.get('/login', function(req, res) {
 });
 
 router.post('/login', function(req, res) {
+	console.log(req);
 	var user_id = req.body.user_id;
 	var password = req.body.password;
 	User.findOne({user_id: user_id }, function(err, user) {
@@ -70,6 +75,7 @@ router.post('/login', function(req, res) {
 				res.write('User not found.');
 			} else {
 				res.setHeader('Content-Type', 'application/json');
+				res.status(200);
 				var salt = user.salt;
 				if (bcrypt.hashSync(password, salt) === user.password) {
 					res.write(JSON.stringify(user));
