@@ -56,6 +56,29 @@
             android:text="@string/loginBtn"
             android:layout_marginTop="@dimen/form_vertical_margin"
         />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+        >
+
+            <TextView
+                android:id="@+id/checkBoxText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/checkBoxHint"
+                android:textSize="@dimen/paragraph_text_size"
+                android:layout_toLeftOf="@+id/logCheckBox"
+            />
+
+            <CheckBox
+                android:id="@+id/logCheckBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+            />
+
+        </RelativeLayout>
+
 
     </LinearLayout>
 
