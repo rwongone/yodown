@@ -27,6 +27,7 @@ router.post('/', function(req, res) {
 				user.lastTimeActive = Date.now();
 				user.save( function(err) {
 					if (!err) {
+						res.status(200);
 						console.log("user " + user.user_id + " is at " + user.location.latitude + ", " + user.location.longitude + ".");		
 					} else {
 						console.log("ERROR updating user " + user.user_id + ".");
@@ -43,6 +44,7 @@ router.post('/', function(req, res) {
 								place.save( function(err) {
 									if (!err) {
 										console.log("user " + place.user_id + " is at " + place.place.latitude + ", " + place.place.longitude + ".");		
+
 									} else {
 										console.log("error updating place " + place.user_id + "." + err);
 									}

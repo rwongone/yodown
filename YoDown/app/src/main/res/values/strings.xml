@@ -24,5 +24,7 @@
     <string name="createNotify">A Yo will be sent to you.</string>
     <string name="title_activity_game">GameActivity</string>
     <string name="game_instruction">Yo!</string>
+    <string name="checkBoxHint">Save login?</string>
+    <string name="loginError">Error logging in.</string>
 
 </resources>

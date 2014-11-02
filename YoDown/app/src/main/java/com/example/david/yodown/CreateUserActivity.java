@@ -60,6 +60,7 @@ public class CreateUserActivity extends ActionBarActivity {
 
     private void sendServer(View v){
         String username = createUsername.getText().toString();
+        username = username.trim();
         RequestParams parameters = new RequestParams();
         parameters.add("user_id", username);
         String URL = BASE_URL+"/users";
@@ -77,7 +78,7 @@ public class CreateUserActivity extends ActionBarActivity {
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, String response, Throwable throwable) {
-                errorId.setText(getResources().getString(R.string.createFail));
+                errorId.setText(statusCode+getResources().getString(R.string.createFail));
                 errorId.setTextColor(getResources().getColor(R.color.errorRed));
             }
         };

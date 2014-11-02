@@ -1,7 +1,8 @@
 package com.example.david.yodown;
 
-import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,7 +10,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -21,11 +24,20 @@ import org.json.JSONObject;
 
 public class LoginActivity extends ActionBarActivity {
 
+    public static final String USERNAME_SAVE = "save username";
+    public static final String PASSWORD_SAVE = "save password";
+
     private Button loginBtn;
     private EditText loginUsername;
     private EditText loginPassword;
+    private CheckBox logCheckBox;
+    private TextView errorId;
     private final String BASE_URL = "http://104.236.61.102:3000";
     private AsyncHttpClient client = new AsyncHttpClient();
+
+    public SharedPreferences mPref;
+    public Editor mEditor;
+    public boolean autoLog = false;
 
     public static final String USERNAME_EXTRA = "Username Extra";
 
@@ -37,11 +49,14 @@ public class LoginActivity extends ActionBarActivity {
         loginUsername = (EditText)findViewById(R.id.loginUsername);
         loginPassword = (EditText)findViewById(R.id.loginPassword);
         loginBtn = (Button)findViewById(R.id.loginBtn);
+        logCheckBox = (CheckBox)findViewById(R.id.logCheckBox);
+        errorId = (TextView)findViewById(R.id.errorId);
 
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 checkValidInput();
+                //toGamePage();
             }
         });
     }
@@ -62,11 +77,11 @@ public class LoginActivity extends ActionBarActivity {
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject response) {
-
+                errorId.setText(getResources().getString(R.string.loginError));
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, String response, Throwable throwable) {
-
+                errorId.setText(getResources().getString(R.string.loginError));
             }
         };
         client.post(URL, parameters, responseHandler);
@@ -74,6 +89,12 @@ public class LoginActivity extends ActionBarActivity {
 
     private void toGamePage(){
         String username = loginUsername.getText().toString();
+        String password = loginPassword.getText().toString();
+        Boolean saveLog = logCheckBox.isChecked();
+        if(saveLog){
+            mEditor.putString(USERNAME_SAVE, username);
+            mEditor.putString(PASSWORD_SAVE, password);
+        }
         Intent intent = new Intent(getApplicationContext(), GameActivity.class);
         intent.putExtra(USERNAME_EXTRA, username);
         startActivity(intent);

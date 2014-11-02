@@ -23,6 +23,7 @@ router.post('/', function(req, res) {
 						// yo the recipient, at this point the recipient must exist
 						yo.yo(recipient.user_id, function(err, yo_res) {
 							if (!err) {
+								res.status(200);
 								res.send(recipient.user_id + " has been YO'd.");
 							} else {
 								res.send("ERROR IN YO'ING RECIPIENT");
