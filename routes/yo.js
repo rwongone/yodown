@@ -21,32 +21,37 @@ router.post('/', function(req, res) {
 						res.send("RECIPIENT USER DOES NOT EXIST");
 					} else {
 						// yo the recipient, at this point the recipient must exist
-						yo.yo(recipient.user_id, function(err, yo_res) {
-							if (!err && !(sender.dead==true)) { //check dead or not before killing people
-								/*** Update Score***/
-								sender.score = sender.score + 100;
-								sender.save( function(err) {
-									if (!err) {
-										res.statusCode = 200;
-										console.log(sender.user_id + " just YO'd " + recipient.user_id + ". Dead flag upadted.");
-									} else {
-										res.send(err);
-									}
-								});
-								/*** Update Flag***/
-								recipient.dead = true;
-								recipient.save( function(err) {
-									if (!err) {
-										res.statusCode = 200;
-										res.send(sender.user_id + " just YO'd " + recipient.user_id + ". Dead flag upadted.");
-									} else {
-										res.send(err);
-									}
-								});
-							} else {
-								res.send("ERROR IN KILLING RECIPIENT, ARE YOU DEAD?");
-							}
-						});
+						if (!(sender.dead==true)){
+							yo.yo(recipient.user_id, function(err, yo_res) {
+								if (!err) { //check dead or not before killing people
+									/*** Update Score***/
+									sender.score = sender.score + 100;
+									sender.save( function(err) {
+										if (!err) {
+											res.statusCode = 200;
+											console.log(sender.user_id + " just YO'd " + recipient.user_id + ". Dead flag upadted.");
+										} else {
+											res.send(err);
+										}
+									});
+									/*** Update Flag***/
+									recipient.dead = true;
+									recipient.save( function(err) {
+										if (!err) {
+											res.statusCode = 200;
+											res.send(sender.user_id + " just YO'd " + recipient.user_id + ". Dead flag upadted.");
+										} else {
+											res.send(err);
+										}
+									});
+								} else {
+									res.send(err);
+								}
+							});
+						}
+						else{
+							res.send("Unfortunately you are dead already :3");
+						}
 					}
 				} else {
 					res.send("ERROR IN RETRIEVING USER");
