@@ -42,17 +42,17 @@ router.post('/', function(req, res) {
 						}
 					});
 
-					var range = 1;
+					var range = 10;
+					var a = latlong.latitude-range;
+					var b = latlong.latitude+range;
+					var c = latlong.longitude-range;
+					var d = latlong.longitude+range;
 					console.log(latlong.latitude-range);
 					console.log("^range");
-					console.log(latlong.longitude-range);
-
 					/*********************Start Fetching Nearby Users**********************/
 					User.find({
-						'location.latitude': { $gte: {$subtract:[latlong.latitude, range]}},
-						'location.latitude': { $lte: {$add:[latlong.latitude, range]}},
-						'location.longitude': { $gte: {$subtract:[latlong.longitude, range]}},
-						'location.longitude': { $lte: {$add:[latlong.longitude, range]}},
+						'location.latitude': { $gte: a, $lte: b },
+						'location.longitude': { $gte: c, $lte: d },
 						user_id: {$ne: user_id},
 						'dead':  false
 						}, function (err, users) {
