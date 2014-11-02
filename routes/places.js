@@ -10,7 +10,7 @@ router.get('/', function(req, res) {
 });
 
 /* POST updated user data. */
-router.post('/', function(req, res) { 
+router.post('/', function(req, res) {
 	var latlong = { latitude: req.body.latitude, longitude: req.body.longitude};
 	var user_id = req.body.user_id;
 	console.log("Get a post request from " + user_id + " at " +latlong.latitude + " and "+ latlong.longitude);
@@ -25,7 +25,7 @@ router.post('/', function(req, res) {
 				user.save( function(err) {
 					if (!err) {
 						res.status(200);
-						// console.log("user " + user.user_id + " is at " + user.location.latitude + ", " + user.location.longitude + ".");		
+						// console.log("user " + user.user_id + " is at " + user.location.latitude + ", " + user.location.longitude + ".");
 					} else {
 						console.log("ERROR updating user " + user.user_id + ".");
 					}
@@ -44,16 +44,19 @@ router.post('/', function(req, res) {
 
 					var range = 1;
 					/*********************Start Fetching Nearby Users**********************/
-					User.find({
+					var users = User.find({
 						'location.latitude': { $gte: latlong.latitude-range, $lte: latlong.latitude+range },
 						'location.longitude': { $gte: latlong.longitude-range, $lte: latlong.longitude+range },
 						'dead': { $ne: true },
 						user_id: {$ne: user_id}
-						}, function (err, users) {
-						res.setHeader('Content-Type', 'application/json');
-					  	res.write(JSON.stringify(users));
-					  	res.end();
+					},
+					{
+							user_id : 1
+					}
 					});
+					res.setHeader('Content-Type', 'application/json');
+					res.write(JSON.stringify(users));
+					res.end();
 					/*********************Fetching Nearby Users Ends**********************/
 				});
 			}

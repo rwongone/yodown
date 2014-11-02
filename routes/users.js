@@ -94,7 +94,7 @@ router.get('/nearby', function(req, res) {
 
 setInterval(function(){
 	User.update(
-		{'dead':  true },
+		{'dead':  true},
 		{
 			$set:{'dead' : false}
 		});
