@@ -20,7 +20,8 @@ router.post('/', function(req, res) {
 		yo.yo_link(user_id, create_password + user_id, function(err, yo_res) {
 			if (!err) {
 				// user exists
-				res.send(user_id + " has been YO'd.");
+				res.setHeader('Content-Type', 'application/json');
+				res.write(JSON.stringify({response: "0"}));
 			} else {
 				// user does not exist
 				res.send("USER NEEDS TO CREATE A YO ACCOUNT WITH THIS NAME");
