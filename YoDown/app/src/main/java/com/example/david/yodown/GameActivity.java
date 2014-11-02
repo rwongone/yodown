@@ -3,34 +3,22 @@ package com.example.david.yodown;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.location.Location;
-import android.support.v4.app.DialogFragment;
-import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
-
-import org.apache.http.Header;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.HashMap;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
@@ -38,6 +26,15 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import org.apache.http.Header;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public class GameActivity extends ActionBarActivity implements GooglePlayServicesClient.ConnectionCallbacks,
                                                                                                 GooglePlayServicesClient.OnConnectionFailedListener,
@@ -113,6 +110,14 @@ public class GameActivity extends ActionBarActivity implements GooglePlayService
         Log.v("URL:", URL);
         JsonHttpResponseHandler responseHandler = new JsonHttpResponseHandler() {
             @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                Toast.makeText(getApplication(), "Success", Toast.LENGTH_SHORT).show();
+                enemies.add("Three");
+                adapter.clear();
+                adapter.addAll(enemies);
+                adapter.notifyDataSetChanged();
+            }
+            @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 Toast.makeText(getApplication(), "Success", Toast.LENGTH_SHORT).show();
                 enemies.add("Three");
@@ -123,13 +128,19 @@ public class GameActivity extends ActionBarActivity implements GooglePlayService
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject response) {
                 Toast.makeText(getApplication(), "Fail1", Toast.LENGTH_SHORT).show();
+                if(response!=null){
+                    Log.v("FAIL1:", response.toString());
+                }
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, String response, Throwable throwable) {
                 Toast.makeText(getApplication(), "Fail2", Toast.LENGTH_SHORT).show();
+                if(response != null){
+                    Log.v("FAIL2:", response);
+                }
             }
         };
-        client.get(URL, parameters, responseHandler);
+        client.post(URL, parameters, responseHandler);
 
     }
 
@@ -181,9 +192,9 @@ public class GameActivity extends ActionBarActivity implements GooglePlayService
         mLocationRequest.setFastestInterval(FASTEST_INTERVAL);
         mUpdateRequest = true;
 
-        Intent mServiceIntent = new Intent(this, locationUpdateService.class);
-        mServiceIntent.putExtra("USERNAME",username);
-        this.startService(mServiceIntent);
+        // Intent mServiceIntent = new Intent();
+        //mServiceIntent.setAction(".LocationLoggerServiceManager");
+        //sendBroadcast(mServiceIntent);
 
         //mLocationClient.connect();
         //mCurrentLocation = mLocationClient.getLastLocation();
