@@ -52,9 +52,10 @@ router.post('/', function(req, res) {
 						longitude: {$lt: latlong.longitude + 1},
 						user_id: {$ne: user_id},
 						lastTimeActive: {$gt: Date.now() - 600000}
-						}, function (err, userList) {
+						}, function (err, users) {
 						res.setHeader('Content-Type', 'application/json');
-					  	res.send(JSON.stringify(place));
+					  	res.write(JSON.stringify(users));
+					  	res.end();
 					});
 					/*********************Fetching Nearby Users Ends**********************/
 				});
