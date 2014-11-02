@@ -100,6 +100,7 @@ public class GameActivity extends ActionBarActivity implements GooglePlayService
                 Double.toString(location.getLongitude());
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
         //TODO: send username + location to server
+        username = mPrefs.getString(LoginActivity.USERNAME_SAVE, "DavidIsTheBest");
         RequestParams parameters = new RequestParams();
         parameters.add("user_id", username);
         parameters.add("latitude", Double.toString(location.getLatitude()));
@@ -136,7 +137,7 @@ public class GameActivity extends ActionBarActivity implements GooglePlayService
 
         Intent intent = getIntent();
         username = intent.getStringExtra(LoginActivity.USERNAME_EXTRA);
-        username = intent.getStringExtra(CreateUserActivity.USERNAME_EXTRA);
+        //username = intent.getStringExtra(CreateUserActivity.USERNAME_EXTRA);
 
         mPrefs = getSharedPreferences("SharedPreferences", Context.MODE_PRIVATE);
         mEditor = mPrefs.edit();
