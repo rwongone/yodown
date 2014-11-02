@@ -23,10 +23,11 @@ router.post('/', function(req, res) {
 				// user exists
 				res.setHeader('Content-Type', 'application/json');
 				res.status(200);
-				res.write(JSON.stringify({response: "0"}));
+				res.end();
 			} else {
 				// user does not exist
-				res.send("USER NEEDS TO CREATE A YO ACCOUNT WITH THIS NAME");
+				res.send(err);
+				res.end();
 			}
 		});
 	} else {
