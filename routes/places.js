@@ -49,10 +49,10 @@ router.post('/', function(req, res) {
 
 					/*********************Start Fetching Nearby Users**********************/
 					User.find({
-						'location.latitude': { $gte: latlong.latitude-range},
-						'location.latitude': { $lte: latlong.latitude+range},
-						'location.longitude': { $gte: latlong.longitude-range},
-						'location.longitude': { $lte: latlong.longitude+range},
+						'location.latitude': { $gte: 40},
+						'location.latitude': { $lte: 42},
+						'location.longitude': { $gte: -74},
+						'location.longitude': { $lte: -72},
 						user_id: {$ne: user_id},
 						'dead':  false
 						}, function (err, users) {
