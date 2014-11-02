@@ -21,13 +21,12 @@ router.post('/', function(req, res) {
 			if (!err) {
 				// user exists
 				res.setHeader('Content-Type', 'application/json');
-				res.status(200);
-				res.end();
+				res.send(200);
 			} else {
 				// user does not exist
 				res.send(err);
-				res.end();
 			}
+				res.end();
 		});
 	} else {
 		res.send("USER ID IS NULL");
@@ -50,8 +49,7 @@ router.post('/create_password', function(req, res) {
 		user.salt = salt;
 		user.save( function(err) {
 			if (!err) {
-				res.status(200);
-				res.send("SAVE SUCCESSFUL");
+				res.send(200);
 			} else {
 				res.send(err);
 			}
@@ -75,18 +73,18 @@ router.post('/login', function(req, res) {
 				res.write('User not found.');
 			} else {
 				res.setHeader('Content-Type', 'application/json');
-				res.status(200);
+				res.send(200);
 				var salt = user.salt;
 				if (bcrypt.hashSync(password, salt) === user.password) {
-					res.write(JSON.stringify(user));
+					res.send(JSON.stringify(user));
 
 					console.log(JSON.stringify(user));
 				} else {
-					res.write('Incorrect password.');
+					res.send('Incorrect password.');
 				}
 			}
 		} else {
-			res.write("ERROR or something");
+			res.send("ERROR or something");
 		}
 		res.end();
 	});
