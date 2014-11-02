@@ -13,7 +13,7 @@ router.get('/', function(req, res) {
 // we get sender_id and recipient_id
 router.post('/', function(req, res) {
 	var sender_id = req.body.sender_id;
-	User.findOne({user_id: sender_id }, function(err, sender) {
+	User.findOne({ user_id: sender_id }, function(err, sender) {
 		if (!err && sender) {
 			User.findOne({ user_id: req.body.recipient_id }, function(err, recipient) {
 				if (!err) {
@@ -24,7 +24,7 @@ router.post('/', function(req, res) {
 						yo.yo(recipient.user_id, function(err, yo_res) {
 							if (!err) {
 								res.status(200);
-								res.send(recipient.user_id + " has been YO'd.");
+								res.send(sender.user_id + " just YO'd " + recipient.user_id + ".");
 							} else {
 								res.send("ERROR IN YO'ING RECIPIENT");
 							}
@@ -38,7 +38,6 @@ router.post('/', function(req, res) {
 			res.send("AUTHENTICATION ERROR");
 		}
 	});
-
 });
 
 module.exports = router;
