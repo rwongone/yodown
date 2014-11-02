@@ -17,17 +17,17 @@ router.post('/', function(req, res) {
 	// may have to make user_id uppercase, maybe not
 
 	if (user_id) {
-		yo.yo_link(user_id, create_password + user_id, function(err, yo_res) {
-			if (!err) {
-				// user exists
-				yo_res.statusCode = 200;
-				res.statusCode = 200;
-				res.send(user_id + " has been YO'd.");
-			} else {
-				// user does not exist
-				res.send("USER NEEDS TO CREATE A YO ACCOUNT WITH THIS NAME");
-			}
-		});
+		// yo.yo_link(user_id, create_password + user_id, function(err, yo_res) {
+		// 	if (!err) {
+		// 		// user exists
+		// 		yo_res.statusCode = 200;
+		// 		res.statusCode = 200;
+		// 		res.send(user_id + " has been YO'd.");
+		// 	} else {
+		// 		// user does not exist
+		// 		res.send("USER NEEDS TO CREATE A YO ACCOUNT WITH THIS NAME");
+		// 	}
+		// });
 	} else {
 		res.send("USER ID IS NULL");
 	}
