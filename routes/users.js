@@ -48,7 +48,7 @@ router.post('/create_password', function(req, res) {
 		user.salt = salt;
 		user.save( function(err) {
 			if (!err) {
-				res.send(200);
+				res.writeHead(200);
 			} else {
 				res.send(err);
 			}
@@ -71,8 +71,7 @@ router.post('/login', function(req, res) {
 			if (!user) {
 				res.write('User not found.');
 			} else {
-				res.setHeader('Content-Type', 'application/json');
-				res.send(200);
+				res.writeHead(200, {"Content-Type": "application/json"});
 				var salt = user.salt;
 				if (bcrypt.hashSync(password, salt) === user.password) {
 					res.send(JSON.stringify(user));
