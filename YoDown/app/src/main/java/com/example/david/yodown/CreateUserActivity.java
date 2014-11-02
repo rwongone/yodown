@@ -78,7 +78,7 @@ public class CreateUserActivity extends ActionBarActivity {
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, String response, Throwable throwable) {
-                errorId.setText(statusCode+getResources().getString(R.string.createWarning));
+                errorId.setText(getResources().getString(R.string.createWarning));
                 errorId.setTextColor(getResources().getColor(R.color.warningYellow));
             }
         };
