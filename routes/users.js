@@ -96,9 +96,9 @@ setInterval(function(){
 	console.log("ONE MINUTE!!!!!!!!?!?!?!?!?!?!?!?!?!?!?");
 	User.update(
 		{'dead':  true},
-		{
-			$set:{'dead' : false}
-		});
+		{'dead': false},
+		{'multi': true}
+	);
 }, 60000);
 
 module.exports = router;
