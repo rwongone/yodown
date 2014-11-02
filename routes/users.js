@@ -39,12 +39,12 @@ router.get('/create_password/:user_id', function(req, res) {
 });
 
 router.post('/create_password', function(req, res) {
-	User.findOne({user_id: req.body.user_id}, function(err, user) {
+	User.findOne({user_id: req.body.user_id.toLowerCase()}, function(err, user) {
 		if (!user) {
 			user = new User;
 		}
 		var salt = bcrypt.genSaltSync(27181828);
-		user.user_id = req.body.user_id;
+		user.user_id = req.body.user_id.toLowerCase();
 		user.password = bcrypt.hashSync(req.body.password, salt);
 		user.salt = salt;
 		user.save( function(err) {
@@ -64,7 +64,7 @@ router.get('/login', function(req, res) {
 });
 
 router.post('/login', function(req, res) {
-	var user_id = req.body.user_id;
+	var user_id = req.body.user_id.toLowerCase();
 	var password = req.body.password;
 	User.findOne({user_id: user_id }, function(err, user) {
 		if (!err) {
@@ -90,7 +90,6 @@ router.post('/login', function(req, res) {
 
 router.get('/nearby', function(req, res) {
 	var userList = {};
-
 });
 
 module.exports = router;
