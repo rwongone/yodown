@@ -98,6 +98,6 @@ setInterval(function(){
 		{dead: true},
 		{dead: false}
 	);
-}, 60);
+}, 60000);
 
 module.exports = router;
