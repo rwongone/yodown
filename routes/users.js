@@ -4,7 +4,7 @@ var bcrypt = require('bcrypt');
 var router = express.Router();
 var yo = require('../utils').yo;
 var User = require('../public/models/user').User;
-var create_password = "http://172.26.12.55:3000/users/create_password/";
+var create_password = "http://104.236.61.102:3000/users/create_password/";
 
 // Mimic POST from mobile app for account signup
 router.get('/', function(req, res) {
@@ -20,6 +20,7 @@ router.post('/', function(req, res) {
 		yo.yo_link(user_id, create_password + user_id, function(err, yo_res) {
 			if (!err) {
 				// user exists
+				yo_res.statusCode = 200;
 				res.statusCode = 200;
 				res.send(user_id + " has been YO'd.");
 			} else {
