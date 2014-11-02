@@ -44,22 +44,17 @@ router.post('/', function(req, res) {
 
 					var range = 1;
 					/*********************Start Fetching Nearby Users**********************/
-					var users = User.find({
+					User.find({
 						'location.latitude': { $gte: latlong.latitude-range, $lte: latlong.latitude+range },
 						'location.longitude': { $gte: latlong.longitude-range, $lte: latlong.longitude+range },
 						user_id: {$ne: user_id}
-						},
-						{
-							user_id : 1
-						}
-					);
-					console.log("what");
-					console.log(users);
-					res.setHeader('Content-Type', 'application/json');
-					while (users.hasNext()) {
-						res.write(JSON.stringify(users.next()));
-					}
-					res.end();
+						}, function (err, users) {
+							console.log("users:");
+							console.log(users);
+							res.setHeader('Content-Type', 'application/json');
+					  	res.write(JSON.stringify(users));
+					  	res.end();
+					});
 					/*********************Fetching Nearby Users Ends**********************/
 				});
 			}
