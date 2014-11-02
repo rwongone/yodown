@@ -45,6 +45,8 @@ router.post('/', function(req, res) {
 					var range = 1;
 					console.log(latlong.latitude-range);
 					console.log("^range");
+					console.log(latlong.longitude-range);
+
 					/*********************Start Fetching Nearby Users**********************/
 					User.find({
 						'location.latitude': { $gte: latlong.latitude-range},
