@@ -95,7 +95,6 @@ router.get('/nearby', function(req, res) {
 setInterval(function(){
 	console.log("ONE MINUTE!!!!!!!!?!?!?!?!?!?!?!?!?!?!?");
 	User.update(
-		{}, {$set: {dead: false}}, { multi: true }
-}), 10000);
+		{}, {$set: {dead: false}}, { multi: true }), 10000);
 
 module.exports = router;
