@@ -23,8 +23,16 @@ router.post('/', function(req, res) {
 						// yo the recipient, at this point the recipient must exist
 						yo.yo(recipient.user_id, function(err, yo_res) {
 							if (!err) {
-								res.status(200);
-								res.send(sender.user_id + " just YO'd " + recipient.user_id + ".");
+								/*** Update Flag***/
+								recipient.dead = true;
+								recipient.save( function(err) {
+									if (!err) {
+										res.statusCode = 200;
+										res.send(sender.user_id + " just YO'd " + recipient.user_id + ". Dead flag upadted.");
+									} else {
+										res.send(err);
+									}
+								});
 							} else {
 								res.send("ERROR IN YO'ING RECIPIENT");
 							}
@@ -34,6 +42,7 @@ router.post('/', function(req, res) {
 					res.send("ERROR IN RETRIEVING USER");
 				}
 			});
+
 		} else {
 			res.send("AUTHENTICATION ERROR");
 		}
