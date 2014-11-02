@@ -42,7 +42,7 @@ router.post('/', function(req, res) {
 						}
 					});
 
-					var range = 1;
+					var range = 10000;
 					console.log(latlong.latitude-range);
 					console.log("^range");
 					console.log(latlong.longitude-range);
