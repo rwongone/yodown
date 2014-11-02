@@ -55,6 +55,7 @@ public class GameActivity extends ActionBarActivity implements GooglePlayService
     public static final long FASTEST_INTERVAL = 1 * 1000;
 
     private ListView enemiesList;
+    public ArrayAdapter<String> adapter;
 
     private String username = "";
     private ArrayList<String> enemies;
@@ -99,7 +100,7 @@ public class GameActivity extends ActionBarActivity implements GooglePlayService
         String msg = "Updated Location: " + username +
                 Double.toString(location.getLatitude()) + "," +
                 Double.toString(location.getLongitude());
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
         //TODO: send username + location to server
         username = mPrefs.getString(LoginActivity.USERNAME_SAVE, "DavidIsTheBest");
         RequestParams parameters = new RequestParams();
@@ -111,14 +112,19 @@ public class GameActivity extends ActionBarActivity implements GooglePlayService
         JsonHttpResponseHandler responseHandler = new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                Toast.makeText(getApplication(), "Success", Toast.LENGTH_SHORT).show();
                 enemies.add("Three");
-                ((BaseAdapter) enemiesList.getAdapter()).notifyDataSetChanged();
+                adapter.clear();
+                adapter.addAll(enemies);
+                adapter.notifyDataSetChanged();
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject response) {
+                Toast.makeText(getApplication(), "Fail1", Toast.LENGTH_SHORT).show();
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, String response, Throwable throwable) {
+                Toast.makeText(getApplication(), "Fail2", Toast.LENGTH_SHORT).show();
             }
         };
         client.get(URL, parameters, responseHandler);
@@ -152,7 +158,8 @@ public class GameActivity extends ActionBarActivity implements GooglePlayService
         //Testing
         enemies.add("one");
         enemies.add("Two");
-        enemiesList.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, enemies));
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, enemies);
+        enemiesList.setAdapter(adapter);
         Log.v("g","g");
         enemiesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
