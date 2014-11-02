@@ -32,6 +32,7 @@ import com.loopj.android.http.RequestParams;
 
 import org.apache.http.Header;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -112,18 +113,31 @@ public class GameActivity extends ActionBarActivity implements GooglePlayService
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 Toast.makeText(getApplication(), "Success", Toast.LENGTH_SHORT).show();
-                enemies.add("Three");
+                //enemies.add("Three");
                 adapter.clear();
-                adapter.addAll(enemies);
+                ArrayList<String> temp = new ArrayList<String>();
+                enemies.clear();
+                if(response!=null){
+                    for(int i=0;i<response.length();i++){
+                        try {
+                            temp.add(response.getJSONObject(i).getString("user_id"));
+                            //enemies.add(response.getJSONObject(i).getString("user_id"));
+                            Log.v("User:", response.getJSONObject(i).getString("user_id"));
+                        }catch(JSONException e){
+                            Log.v("JSON exception:",e.toString());
+                        }
+                    }
+                }
+                adapter.addAll(temp);
                 adapter.notifyDataSetChanged();
             }
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                Toast.makeText(getApplication(), "Success", Toast.LENGTH_SHORT).show();
-                enemies.add("Three");
-                adapter.clear();
-                adapter.addAll(enemies);
-                adapter.notifyDataSetChanged();
+                Toast.makeText(getApplication(), "Success2", Toast.LENGTH_SHORT).show();
+                //enemies.add("Three");
+                //adapter.clear();
+                //adapter.addAll(enemies);
+                //adapter.notifyDataSetChanged();
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject response) {
@@ -170,8 +184,8 @@ public class GameActivity extends ActionBarActivity implements GooglePlayService
         //TODO: get closest locations
         enemies = new ArrayList<String>();
         //Testing
-        enemies.add("one");
-        enemies.add("Two");
+        //enemies.add("one");
+        //enemies.add("Two");
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, enemies);
         enemiesList.setAdapter(adapter);
         Log.v("g","g");
