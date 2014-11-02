@@ -15,7 +15,6 @@ router.post('/', function(req, res) {
 	//var place = req.body.location;
 	var latlong = { latitude: req.body.latitude, longitude: req.body.longitude};
 	var user_id = req.body.user_id;
-	res.setHeader('Content-Type', 'application/json');
 	User.findOne({user_id: user_id}, function(err, user) {
 		if (!err) {
 			if (!user) {
@@ -54,6 +53,7 @@ router.post('/', function(req, res) {
 						user_id: {$ne: user_id},
 						lastTimeActive: {$gt: Date.now() - 600000}
 						}, function (err, userList) {
+						res.setHeader('Content-Type', 'application/json');
 					  	res.send(JSON.stringify(place));
 					});
 					/*********************Fetching Nearby Users Ends**********************/
