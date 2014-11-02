@@ -27,5 +27,7 @@
     <string name="checkBoxHint">Save login?</string>
     <string name="loginError">Error logging in.</string>
     <string name="createWarning">Yo! Set your password!</string>
+    <string name="title_activity_high_score">HighScoreActivity</string>
+    <string name="highScoreText">High Score</string>
 
 </resources>

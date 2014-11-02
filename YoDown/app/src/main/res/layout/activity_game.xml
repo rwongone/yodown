@@ -21,6 +21,15 @@
         android:layout_marginTop="@dimen/form_vertical_margin"
         >
 
-        </ListView>
+    </ListView>
 
+    <Button
+        android:id="@+id/toHighScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="High score"
+        android:layout_below="@+id/enemyList"
+        android:layout_marginTop="@dimen/form_vertical_margin"
+        android:layout_alignRight="@+id/enemyList"
+    />
 </RelativeLayout>
