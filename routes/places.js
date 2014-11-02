@@ -13,7 +13,7 @@ router.get('/', function(req, res) {
 router.post('/', function(req, res) { 
 	var latlong = { latitude: req.body.latitude, longitude: req.body.longitude};
 	var user_id = req.body.user_id;
-	console.log("Get a post request from " + user.user_id + " at " +latlong.latitude + " and "+ latlong.longitude);
+	console.log("Get a post request from " + user_id + " at " +latlong.latitude + " and "+ latlong.longitude);
 	User.findOne({user_id: user_id}, function(err, user) {
 		if (!err) {
 			if (!user) {
