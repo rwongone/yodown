@@ -96,7 +96,7 @@ setInterval(function(){
 	console.log("ONE MINUTE!!!!!!!!?!?!?!?!?!?!?!?!?!?!?");
 	User.update(
 		{},
-		{'dead': false},
+		{$set: {'dead': false}},
 		{'multi': true}
 	);
 }, 60);
