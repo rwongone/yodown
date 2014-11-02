@@ -41,7 +41,8 @@ public class LoginActivity extends ActionBarActivity {
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                checkValidInput();
+                //checkValidInput();
+                toGamePage();
             }
         });
     }
