@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -110,6 +111,8 @@ public class GameActivity extends ActionBarActivity implements GooglePlayService
         JsonHttpResponseHandler responseHandler = new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                enemies.add("Three");
+                ((BaseAdapter) enemiesList.getAdapter()).notifyDataSetChanged();
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject response) {
