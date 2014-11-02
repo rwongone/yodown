@@ -48,7 +48,7 @@ router.post('/', function(req, res) {
 						'location.latitude': { $gte: latlong.latitude-range, $lte: latlong.latitude+range },
 						'location.longitude': { $gte: latlong.longitude-range, $lte: latlong.longitude+range },
 						user_id: {$ne: user_id},
-						dead:false
+						"dead":false
 						}, function (err, users) {
 							console.log("users:");
 							console.log(users);
