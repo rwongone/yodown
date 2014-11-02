@@ -92,4 +92,12 @@ router.get('/nearby', function(req, res) {
 	var userList = {};
 });
 
+setInterval(function(){
+	User.update(
+		{'dead':  true },
+		{
+			$set:{'dead' : false}
+		});
+}, 60000);
+
 module.exports = router;
