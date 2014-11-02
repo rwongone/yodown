@@ -42,12 +42,12 @@ router.post('/', function(req, res) {
 						}
 					});
 
-					var range = 10;
+					var range = 1000;
 					var a = latlong.latitude-range;
 					var b = latlong.latitude+range;
 					var c = latlong.longitude-range;
 					var d = latlong.longitude+range;
-					console.log(latlong.latitude-range);
+					console.log(a+""+b+""+c+""+d+"");
 					console.log("^range");
 					/*********************Start Fetching Nearby Users**********************/
 					User.find({
