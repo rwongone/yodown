@@ -4,7 +4,7 @@ var bcrypt = require('bcrypt');
 var router = express.Router();
 var yo = require('../utils').yo;
 var User = require('../public/models/user').User;
-var create_password = "http://104.236.61.102:3000/users/create_password/";
+var create_password = "http://172.26.12.55:3000/users/create_password/";
 
 // Mimic POST from mobile app for account signup
 router.get('/', function(req, res) {
@@ -20,12 +20,12 @@ router.post('/', function(req, res) {
 		yo.yo_link(user_id, create_password + user_id, function(err, yo_res) {
 			if (!err) {
 				// user exists
-				res.writeHead(200, {"Content-Type": "application/json"});
+				res.statusCode = 200;
+				res.send(user_id + " has been YO'd.");
 			} else {
 				// user does not exist
-				res.send(err);
+				res.send("USER NEEDS TO CREATE A YO ACCOUNT WITH THIS NAME");
 			}
-				res.end();
 		});
 	} else {
 		res.send("USER ID IS NULL");
@@ -37,7 +37,6 @@ router.get('/create_password/:user_id', function(req, res) {
 });
 
 router.post('/create_password', function(req, res) {
-	console.log(req);
 	User.findOne({user_id: req.body.user_id}, function(err, user) {
 		if (!user) {
 			user = new User;
@@ -48,11 +47,11 @@ router.post('/create_password', function(req, res) {
 		user.salt = salt;
 		user.save( function(err) {
 			if (!err) {
-				res.writeHead(200);
+				res.statusCode = 200;
+				res.send("SAVE SUCCESSFUL");
 			} else {
 				res.send(err);
 			}
-			res.end();
 		});
 	});
 });
@@ -63,15 +62,15 @@ router.get('/login', function(req, res) {
 });
 
 router.post('/login', function(req, res) {
-	console.log(req);
 	var user_id = req.body.user_id;
 	var password = req.body.password;
 	User.findOne({user_id: user_id }, function(err, user) {
 		if (!err) {
 			if (!user) {
-				res.write('User not found.');
+				res.send('User not found.');
 			} else {
-				res.writeHead(200, {"Content-Type": "application/json"});
+				res.setHeader('Content-Type', 'application/json');
+				res.statusCode = 200;
 				var salt = user.salt;
 				if (bcrypt.hashSync(password, salt) === user.password) {
 					res.send(JSON.stringify(user));
@@ -84,7 +83,6 @@ router.post('/login', function(req, res) {
 		} else {
 			res.send("ERROR or something");
 		}
-		res.end();
 	});
 });
 
