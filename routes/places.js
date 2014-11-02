@@ -11,19 +11,22 @@ router.get('/', function(req, res) {
 
 /* POST updated user data. */
 router.post('/', function(req, res) { 
-	//var place = null;
-	//var place = req.body.location;
 	var latlong = { latitude: req.body.latitude, longitude: req.body.longitude};
 	var user_id = req.body.user_id;
 	User.findOne({user_id: user_id}, function(err, user) {
+		console.log("findOne");
 		if (!err) {
+			console.log("no error");
 			if (!user) {
+				console.log("no such user");
 				res.write("User Not Found.");
 				res.end();
 			} else {
+				console.log("user exists");
 				user.location = latlong;
 				user.lastTimeActive = Date.now();
 				user.save( function(err) {
+					console.log("save model");
 					if (!err) {
 						res.status(200);
 						console.log("user " + user.user_id + " is at " + user.location.latitude + ", " + user.location.longitude + ".");		
