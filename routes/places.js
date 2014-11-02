@@ -56,7 +56,9 @@ router.post('/', function(req, res) {
 					console.log("what");
 					console.log(users);
 					res.setHeader('Content-Type', 'application/json');
-					res.write(JSON.stringify(users));
+					while (users.hasNext()) {
+						res.write(JSON.stringify(users));
+					}
 					res.end();
 					/*********************Fetching Nearby Users Ends**********************/
 				});
