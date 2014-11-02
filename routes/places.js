@@ -47,12 +47,12 @@ router.post('/', function(req, res) {
 					var users = User.find({
 						'location.latitude': { $gte: latlong.latitude-range, $lte: latlong.latitude+range },
 						'location.longitude': { $gte: latlong.longitude-range, $lte: latlong.longitude+range },
-						'dead': { $ne: true },
 						user_id: {$ne: user_id}
-					},
-					{
+						},
+						{
 							user_id : 1
-					});
+						}
+					);
 					res.setHeader('Content-Type', 'application/json');
 					res.write(JSON.stringify(users));
 					res.end();
