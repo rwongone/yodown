@@ -47,7 +47,7 @@ router.post('/', function(req, res) {
 					User.find({
 						'location.latitude': { $gte: latlong.latitude-range, $lte: latlong.latitude+range },
 						'location.longitude': { $gte: latlong.longitude-range, $lte: latlong.longitude+range },
-						'dead': { $ne: false },
+						'dead': { $ne: true },
 						user_id: {$ne: user_id}
 						}, function (err, users) {
 						res.setHeader('Content-Type', 'application/json');
