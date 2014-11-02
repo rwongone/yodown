@@ -55,9 +55,11 @@ router.post('/', function(req, res) {
 								  // if (err) return console.error(err);
 								  // console.log(userList)
 								  userList.forEach(function(userList){
-								  	// if (Math.abs(userList.location.latitude - latlong.latitude < 10) || Math.abs(userList.location.longitude - latlong.longitude < 10) )
+								  	if (Math.abs(userList.location.latitude - latlong.latitude < 10) && Math.abs(userList.location.longitude - latlong.longitude < 10) && (Date.now()-userList.lastTimeActive)< 600000){
 								  		res.write(JSON.stringify(userList));
-								  	
+								  		console.log("HERE!");
+								  		console.log(userList);
+								  	}
 								  });
 								});
 
