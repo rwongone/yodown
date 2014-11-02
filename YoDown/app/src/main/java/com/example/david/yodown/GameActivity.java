@@ -129,6 +129,7 @@ public class GameActivity extends ActionBarActivity implements GooglePlayService
             }
         };
         client.get(URL, parameters, responseHandler);
+
     }
 
     public void showErrorDialog(int errorCode){
@@ -178,6 +179,11 @@ public class GameActivity extends ActionBarActivity implements GooglePlayService
         mLocationRequest.setInterval(UPDATE_INTERVAL);
         mLocationRequest.setFastestInterval(FASTEST_INTERVAL);
         mUpdateRequest = true;
+
+        Intent mServiceIntent = new Intent(this, locationUpdateService.class);
+        mServiceIntent.putExtra("USERNAME",username);
+        this.startService(mServiceIntent);
+
         //mLocationClient.connect();
         //mCurrentLocation = mLocationClient.getLastLocation();
         //Toast.makeText(this, Double.toString(mCurrentLocation.getLatitude())+Double.toString(mCurrentLocation.getLongitude()), Toast.LENGTH_SHORT).show();
@@ -188,33 +194,6 @@ public class GameActivity extends ActionBarActivity implements GooglePlayService
         parameters.add("recipient_id", recipientId);
         String URL = BASE_URL+"/yo";
         Log.v("URL:", URL);
-        JsonHttpResponseHandler responseHandler = new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                Log.v("response:", response.toString());
-            }
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject response) {
-
-            }
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String response, Throwable throwable) {
-
-            }
-        };
-        client.post(URL, parameters, responseHandler);
-    }
-
-    private void fetchNearbyUsers(User user){
-        RequestParams parameters = new RequestParams();
-        parameters.add("user_id", user.getUserName());
-        Map<String, String> location = new HashMap<String, String>();
-        location.put("latitude", user.getLatitude()+"");
-        location.put("longitude", user.getLongitude()+"");
-        parameters.put("location", location);
-        String URL = BASE_URL+"/location";
-        Log.v("URL:", URL);
-        Log.v("parameters:", parameters.toString());
         JsonHttpResponseHandler responseHandler = new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
