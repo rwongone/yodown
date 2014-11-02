@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -54,6 +55,7 @@ public class GameActivity extends ActionBarActivity implements GooglePlayService
 
     private ListView enemiesList;
     public ArrayAdapter<String> adapter;
+    private Button toHighScore;
 
     private String username = "";
     private ArrayList<String> enemies;
@@ -99,7 +101,6 @@ public class GameActivity extends ActionBarActivity implements GooglePlayService
                 Double.toString(location.getLatitude()) + "," +
                 Double.toString(location.getLongitude());
         //Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
-        //TODO: send username + location to server
         if(mPrefs.contains(LoginActivity.USERNAME_SAVE)) {
             username = mPrefs.getString(LoginActivity.USERNAME_SAVE, "DavidIsTheBest");
         }
@@ -198,6 +199,14 @@ public class GameActivity extends ActionBarActivity implements GooglePlayService
             }
         });
 
+        toHighScore = (Button)findViewById(R.id.toHighScore);
+        toHighScore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toHighScore(v);
+            }
+        });
+
         mLocationClient = new LocationClient(this, this, this);
 
         mLocationRequest = LocationRequest.create();
@@ -214,6 +223,12 @@ public class GameActivity extends ActionBarActivity implements GooglePlayService
         //mCurrentLocation = mLocationClient.getLastLocation();
         //Toast.makeText(this, Double.toString(mCurrentLocation.getLatitude())+Double.toString(mCurrentLocation.getLongitude()), Toast.LENGTH_SHORT).show();
     }
+
+    private void toHighScore(View v){
+        Intent intent = new Intent(v.getContext(), HighScoreActivity.class);
+        startActivity(intent);
+    }
+
     public void sendYo(String senderId, String recipientId){
         RequestParams parameters = new RequestParams();
         parameters.add("sender_id", senderId);
