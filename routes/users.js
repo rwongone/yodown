@@ -97,9 +97,7 @@ setInterval(function(){
 		{'dead': { $e: true }},
 		{
 			$set:{'dead' : false}
-		}
-
-	});
+		});
 }, 60000);
 
 module.exports = router;
