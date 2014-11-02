@@ -93,6 +93,7 @@ router.get('/nearby', function(req, res) {
 });
 
 setInterval(function(){
+	console.log("ONE MINUTE!!!!!!!!?!?!?!?!?!?!?!?!?!?!?");
 	User.update(
 		{'dead':  true},
 		{
